@@ -81,6 +81,23 @@
       word-break: break-all;
       line-height: 1.3;
     }
+    .filepath {
+      font-size: 9px;
+      color: #3a3a5a;
+      word-break: break-all;
+      line-height: 1.4;
+      margin-top: 4px;
+      text-align: left;
+      cursor: text;
+      user-select: all;
+      padding: 3px 4px;
+      border-radius: 3px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .filepath:hover {
+      color: #a78bfa;
+      background: #1e1e2e;
+    }
     .score {
       font-size: 10px;
       color: #555;
@@ -134,7 +151,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Legacy/confluent.png" alt="confluent.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">confluent.png</div>
-        <div class="score">score: 276</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Legacy/confluent.png</div>
+        <div class="score">score: 776</div>
       </div>
       <div class="option " 
            onclick="selectLogo('confluent', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Confluent Cloud.png', this)"
@@ -142,15 +160,17 @@
         
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/Confluent%20Cloud.png" alt="Confluent Cloud.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">Confluent Cloud.png</div>
-        <div class="score">score: 13</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Confluent Cloud.png</div>
+        <div class="score">score: 513</div>
       </div>
       <div class="option " 
-           onclick="selectLogo('confluent', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Confluent Logo.png', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Confluent Logo.png">
+           onclick="selectLogo('confluent', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Legacy/Confluent copy.png', this)"
+           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Legacy/Confluent copy.png">
         
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Confluent%20Logo.png" alt="Confluent Logo.png" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">Confluent Logo.png</div>
-        <div class="score">score: -7</div>
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Legacy/Confluent%20copy.png" alt="Confluent copy.png" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">Confluent copy.png</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Legacy/Confluent copy.png</div>
+        <div class="score">score: 493</div>
       </div></div>
       <div class="selected-path" id="selected-confluent"></div>
     </div>
@@ -163,7 +183,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/Databricks.png" alt="Databricks.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">Databricks.png</div>
-        <div class="score">score: 295</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Databricks.png</div>
+        <div class="score">score: 795</div>
       </div>
       <div class="option " 
            onclick="selectLogo('databricks', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Databricks/Databricks.png', this)"
@@ -171,7 +192,8 @@
         
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Databricks/Databricks.png" alt="Databricks.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">Databricks.png</div>
-        <div class="score">score: 275</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Databricks/Databricks.png</div>
+        <div class="score">score: 775</div>
       </div>
       <div class="option " 
            onclick="selectLogo('databricks', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/DataBricks2.png', this)"
@@ -179,7 +201,8 @@
         
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/DataBricks2.png" alt="DataBricks2.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">DataBricks2.png</div>
-        <div class="score">score: 15</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/DataBricks2.png</div>
+        <div class="score">score: 515</div>
       </div></div>
       <div class="selected-path" id="selected-databricks"></div>
     </div>
@@ -192,23 +215,26 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/Databricks_Notebooks_Logo-removebg-preview.png" alt="Databricks_Notebooks_Logo-removebg-preview.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">Databricks_Notebooks_Logo-removebg-preview.png</div>
-        <div class="score">score: 29</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Databricks_Notebooks_Logo-removebg-preview.png</div>
+        <div class="score">score: 504</div>
       </div>
       <div class="option " 
-           onclick="selectLogo('databricks_notebooks', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Databricks.png', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Databricks.png">
+           onclick="selectLogo('databricks_notebooks', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Databricks Notebooks Logo.png', this)"
+           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Databricks Notebooks Logo.png">
         
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/Databricks.png" alt="Databricks.png" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">Databricks.png</div>
-        <div class="score">score: 15</div>
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/Databricks%20Notebooks%20Logo.png" alt="Databricks Notebooks Logo.png" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">Databricks Notebooks Logo.png</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Databricks Notebooks Logo.png</div>
+        <div class="score">score: 483</div>
       </div>
       <div class="option " 
-           onclick="selectLogo('databricks_notebooks', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/DataBricks2.png', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/DataBricks2.png">
+           onclick="selectLogo('databricks_notebooks', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10787-icon-service-Azure-Databricks.svg', this)"
+           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10787-icon-service-Azure-Databricks.svg">
         
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/DataBricks2.png" alt="DataBricks2.png" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">DataBricks2.png</div>
-        <div class="score">score: 15</div>
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10787-icon-service-Azure-Databricks.svg" alt="10787-icon-service-Azure-Databricks.svg" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">10787-icon-service-Azure-Databricks.svg</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10787-icon-service-Azure-Databricks.svg</div>
+        <div class="score">score: -999</div>
       </div></div>
       <div class="selected-path" id="selected-databricks_notebooks"></div>
     </div>
@@ -221,7 +247,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Dbt/dbt-logo.png" alt="dbt-logo.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">dbt-logo.png</div>
-        <div class="score">score: -4</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Dbt/dbt-logo.png</div>
+        <div class="score">score: 471</div>
       </div></div>
       <div class="selected-path" id="selected-dbt"></div>
     </div>
@@ -234,7 +261,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Digital%20Ocean/digital%20ocean.png" alt="digital ocean.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">digital ocean.png</div>
-        <div class="score">score: -7</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Digital Ocean/digital ocean.png</div>
+        <div class="score">score: 494</div>
       </div>
       <div class="option " 
            onclick="selectLogo('git', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/kisspng-git-merge-branching-version-control-commit-improved-git-management-5c52287a5e9491.9117513715488881863874-removebg-preview.png', this)"
@@ -242,7 +270,8 @@
         
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/kisspng-git-merge-branching-version-control-commit-improved-git-management-5c52287a5e9491.9117513715488881863874-removebg-preview.png" alt="kisspng-git-merge-branching-version-control-commit-improved-git-management-5c52287a5e9491.9117513715488881863874-removebg-preview.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">kisspng-git-merge-branching-version-control-commit-improved-git-management-5c52287a5e9491.9117513715488881863874-removebg-preview.png</div>
-        <div class="score">score: -15</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/kisspng-git-merge-branching-version-control-commit-improved-git-management-5c52287a5e9491.9117513715488881863874-removebg-preview.png</div>
+        <div class="score">score: 486</div>
       </div>
       <div class="option " 
            onclick="selectLogo('git', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Octicons-git-branch.svg.png', this)"
@@ -250,7 +279,8 @@
         
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/Octicons-git-branch.svg.png" alt="Octicons-git-branch.svg.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">Octicons-git-branch.svg.png</div>
-        <div class="score">score: -17</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Octicons-git-branch.svg.png</div>
+        <div class="score">score: 484</div>
       </div></div>
       <div class="selected-path" id="selected-git"></div>
     </div>
@@ -263,7 +293,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/Protocols/grpc-icon-color-removebg-preview.png" alt="grpc-icon-color-removebg-preview.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">grpc-icon-color-removebg-preview.png</div>
-        <div class="score">score: 9</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Protocols/grpc-icon-color-removebg-preview.png</div>
+        <div class="score">score: 509</div>
       </div>
       <div class="option " 
            onclick="selectLogo('grpc', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Protocols/grpc-icon-color.png', this)"
@@ -271,7 +302,8 @@
         
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/Protocols/grpc-icon-color.png" alt="grpc-icon-color.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">grpc-icon-color.png</div>
-        <div class="score">score: -13</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Protocols/grpc-icon-color.png</div>
+        <div class="score">score: 488</div>
       </div></div>
       <div class="selected-path" id="selected-grpc"></div>
     </div>
@@ -284,7 +316,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/Apache%20Kafka.png" alt="Apache Kafka.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">Apache Kafka.png</div>
-        <div class="score">score: 14</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Apache Kafka.png</div>
+        <div class="score">score: 514</div>
       </div>
       <div class="option " 
            onclick="selectLogo('kafka', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Legacy/Confluent Kafka.png', this)"
@@ -292,7 +325,8 @@
         
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Legacy/Confluent%20Kafka.png" alt="Confluent Kafka.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">Confluent Kafka.png</div>
-        <div class="score">score: -8</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Confluent/Legacy/Confluent Kafka.png</div>
+        <div class="score">score: 493</div>
       </div></div>
       <div class="selected-path" id="selected-kafka"></div>
     </div>
@@ -300,28 +334,31 @@
       <h3>ai_ml</h3>
       <div class="options">
       <div class="option recommended" 
-           onclick="selectLogo('ai_ml', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/mlflow-removebg.png', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/mlflow-removebg.png">
+           onclick="selectLogo('ai_ml', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Clients/Global Media/Global_Media_&_Entertainment_Black.png', this)"
+           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Clients/Global Media/Global_Media_&_Entertainment_Black.png">
         <span class="crown">👑</span>
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/mlflow-removebg.png" alt="mlflow-removebg.png" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">mlflow-removebg.png</div>
-        <div class="score">score: 43</div>
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Clients/Global%20Media/Global_Media_&_Entertainment_Black.png" alt="Global_Media_&_Entertainment_Black.png" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">Global_Media_&_Entertainment_Black.png</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Clients/Global Media/Global_Media_&_Entertainment_Black.png</div>
+        <div class="score">score: -999</div>
       </div>
       <div class="option " 
-           onclick="selectLogo('ai_ml', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/ai_hub.svg', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/ai_hub.svg">
+           onclick="selectLogo('ai_ml', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/AI CEP/aicep.jpg', this)"
+           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/AI CEP/aicep.jpg">
         
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/ai_hub.svg" alt="ai_hub.svg" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">ai_hub.svg</div>
-        <div class="score">score: 17</div>
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/AI%20CEP/aicep.jpg" alt="aicep.jpg" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">aicep.jpg</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/AI CEP/aicep.jpg</div>
+        <div class="score">score: -999</div>
       </div>
       <div class="option " 
-           onclick="selectLogo('ai_ml', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/automl.svg', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/automl.svg">
+           onclick="selectLogo('ai_ml', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/AIOTI/aioti-logo-1.jpg', this)"
+           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/AIOTI/aioti-logo-1.jpg">
         
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/automl.svg" alt="automl.svg" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">automl.svg</div>
-        <div class="score">score: 17</div>
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/AIOTI/aioti-logo-1.jpg" alt="aioti-logo-1.jpg" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">aioti-logo-1.jpg</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/AIOTI/aioti-logo-1.jpg</div>
+        <div class="score">score: -999</div>
       </div></div>
       <div class="selected-path" id="selected-ai_ml"></div>
     </div>
@@ -329,28 +366,31 @@
       <h3>delta_lake</h3>
       <div class="options">
       <div class="option recommended" 
-           onclick="selectLogo('delta_lake', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/snowflake.svg', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/snowflake.svg">
-        <span class="crown">👑</span>
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/snowflake.svg" alt="snowflake.svg" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">snowflake.svg</div>
-        <div class="score">score: 16</div>
-      </div>
-      <div class="option " 
-           onclick="selectLogo('delta_lake', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/DeltaTableIcon-removebg-preview.png', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/DeltaTableIcon-removebg-preview.png">
-        
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/DeltaTableIcon-removebg-preview.png" alt="DeltaTableIcon-removebg-preview.png" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">DeltaTableIcon-removebg-preview.png</div>
-        <div class="score">score: 10</div>
-      </div>
-      <div class="option " 
            onclick="selectLogo('delta_lake', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10143-icon-service-Data-Lake-Analytics.svg', this)"
            title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10143-icon-service-Data-Lake-Analytics.svg">
-        
+        <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10143-icon-service-Data-Lake-Analytics.svg" alt="10143-icon-service-Data-Lake-Analytics.svg" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">10143-icon-service-Data-Lake-Analytics.svg</div>
-        <div class="score">score: -44</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10143-icon-service-Data-Lake-Analytics.svg</div>
+        <div class="score">score: -999</div>
+      </div>
+      <div class="option " 
+           onclick="selectLogo('delta_lake', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10150-icon-service-Data-Lake-Store-Gen1.svg', this)"
+           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10150-icon-service-Data-Lake-Store-Gen1.svg">
+        
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10150-icon-service-Data-Lake-Store-Gen1.svg" alt="10150-icon-service-Data-Lake-Store-Gen1.svg" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">10150-icon-service-Data-Lake-Store-Gen1.svg</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/analytics/10150-icon-service-Data-Lake-Store-Gen1.svg</div>
+        <div class="score">score: -999</div>
+      </div>
+      <div class="option " 
+           onclick="selectLogo('delta_lake', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/storage/10090-icon-service-Data-Lake-Storage-Gen1.svg', this)"
+           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/storage/10090-icon-service-Data-Lake-Storage-Gen1.svg">
+        
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/storage/10090-icon-service-Data-Lake-Storage-Gen1.svg" alt="10090-icon-service-Data-Lake-Storage-Gen1.svg" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">10090-icon-service-Data-Lake-Storage-Gen1.svg</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/storage/10090-icon-service-Data-Lake-Storage-Gen1.svg</div>
+        <div class="score">score: -999</div>
       </div></div>
       <div class="selected-path" id="selected-delta_lake"></div>
     </div>
@@ -371,7 +411,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/mlflow-removebg.png" alt="mlflow-removebg.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">mlflow-removebg.png</div>
-        <div class="score">score: 43</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/mlflow-removebg.png</div>
+        <div class="score">score: 543</div>
       </div></div>
       <div class="selected-path" id="selected-mlflow"></div>
     </div>
@@ -384,7 +425,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/MongoDB/MongoDB_Logo.png" alt="MongoDB_Logo.png" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">MongoDB_Logo.png</div>
-        <div class="score">score: -6</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/MongoDB/MongoDB_Logo.png</div>
+        <div class="score">score: 469</div>
       </div></div>
       <div class="selected-path" id="selected-mongodb"></div>
     </div>
@@ -397,7 +439,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/snowflake.svg" alt="snowflake.svg" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">snowflake.svg</div>
-        <div class="score">score: 296</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/snowflake.svg</div>
+        <div class="score">score: 796</div>
       </div></div>
       <div class="selected-path" id="selected-snowflake"></div>
     </div>
@@ -414,7 +457,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/databases/10122-icon-service-Azure-Database-MySQL-Server.svg" alt="10122-icon-service-Azure-Database-MySQL-Server.svg" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">10122-icon-service-Azure-Database-MySQL-Server.svg</div>
-        <div class="score">score: -48</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/databases/10122-icon-service-Azure-Database-MySQL-Server.svg</div>
+        <div class="score">score: 452</div>
       </div></div>
       <div class="selected-path" id="selected-mysql"></div>
     </div>
@@ -427,7 +471,8 @@
         <span class="crown">👑</span>
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/other/01848-icon-service-Arc-PostgreSQL%20.svg" alt="01848-icon-service-Arc-PostgreSQL .svg" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">01848-icon-service-Arc-PostgreSQL .svg</div>
-        <div class="score">score: -42</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/other/01848-icon-service-Arc-PostgreSQL .svg</div>
+        <div class="score">score: 458</div>
       </div>
       <div class="option " 
            onclick="selectLogo('postgresql', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/databases/10131-icon-service-Azure-Database-PostgreSQL-Server.svg', this)"
@@ -435,7 +480,8 @@
         
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/databases/10131-icon-service-Azure-Database-PostgreSQL-Server.svg" alt="10131-icon-service-Azure-Database-PostgreSQL-Server.svg" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">10131-icon-service-Azure-Database-PostgreSQL-Server.svg</div>
-        <div class="score">score: -51</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/databases/10131-icon-service-Azure-Database-PostgreSQL-Server.svg</div>
+        <div class="score">score: 450</div>
       </div>
       <div class="option " 
            onclick="selectLogo('postgresql', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/databases/02827-icon-service-Azure-Database-PostgreSQL-Server-Group.svg', this)"
@@ -443,7 +489,8 @@
         
         <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/databases/02827-icon-service-Azure-Database-PostgreSQL-Server-Group.svg" alt="02827-icon-service-Azure-Database-PostgreSQL-Server-Group.svg" onerror="this.parentElement.classList.add('broken')" /></div>
         <div class="filename">02827-icon-service-Azure-Database-PostgreSQL-Server-Group.svg</div>
-        <div class="score">score: -54</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Partners/Azure/Azure_Public_Service_Icons/Icons/databases/02827-icon-service-Azure-Database-PostgreSQL-Server-Group.svg</div>
+        <div class="score">score: 447</div>
       </div></div>
       <div class="selected-path" id="selected-postgresql"></div>
     </div>
@@ -451,28 +498,31 @@
       <h3>Marionete_logo</h3>
       <div class="options">
       <div class="option recommended" 
-           onclick="selectLogo('Marionete_logo', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/PortWorx/Px-logo-1-removebg-preview.png', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/PortWorx/Px-logo-1-removebg-preview.png">
+           onclick="selectLogo('Marionete_logo', 'logos/Marionete_logo.png', this)"
+           title="logos/Marionete_logo.png">
         <span class="crown">👑</span>
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/PortWorx/Px-logo-1-removebg-preview.png" alt="Px-logo-1-removebg-preview.png" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">Px-logo-1-removebg-preview.png</div>
-        <div class="score">score: 37</div>
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Wynand%20Jordaan/Data%20Intelligence%20Platform/DataIntelligencePlatform/logos/Marionete_logo.png" alt="Marionete_logo.png" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">Marionete_logo.png</div>
+        <div class="filepath" onclick="event.stopPropagation()">logos/Marionete_logo.png</div>
+        <div class="score">score: 773</div>
       </div>
       <div class="option " 
-           onclick="selectLogo('Marionete_logo', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Redis/Logo-redis.svg-removebg-preview.png', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/Redis/Logo-redis.svg-removebg-preview.png">
+           onclick="selectLogo('Marionete_logo', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Clients/BGC/bgc_logo.jpg', this)"
+           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Clients/BGC/bgc_logo.jpg">
         
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/Redis/Logo-redis.svg-removebg-preview.png" alt="Logo-redis.svg-removebg-preview.png" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">Logo-redis.svg-removebg-preview.png</div>
-        <div class="score">score: 35</div>
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Clients/BGC/bgc_logo.jpg" alt="bgc_logo.jpg" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">bgc_logo.jpg</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Clients/BGC/bgc_logo.jpg</div>
+        <div class="score">score: -999</div>
       </div>
       <div class="option " 
-           onclick="selectLogo('Marionete_logo', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/PortWorx/Px-logo-1.webp', this)"
-           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Technologies/PortWorx/Px-logo-1.webp">
+           onclick="selectLogo('Marionete_logo', '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Clients/Beazley/Beazley Logo.jpeg', this)"
+           title="/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Clients/Beazley/Beazley Logo.jpeg">
         
-        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Technologies/PortWorx/Px-logo-1.webp" alt="Px-logo-1.webp" onerror="this.parentElement.classList.add('broken')" /></div>
-        <div class="filename">Px-logo-1.webp</div>
-        <div class="score">score: 16</div>
+        <div class="img-wrap"><img src="file:///Users/wynand.jordaan/Marionete%20Dropbox/Marionete%20Dropbox/Company/Marketing/LOGOS/Clients/Beazley/Beazley%20Logo.jpeg" alt="Beazley Logo.jpeg" onerror="this.parentElement.classList.add('broken')" /></div>
+        <div class="filename">Beazley Logo.jpeg</div>
+        <div class="filepath" onclick="event.stopPropagation()">/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS/Clients/Beazley/Beazley Logo.jpeg</div>
+        <div class="score">score: -999</div>
       </div></div>
       <div class="selected-path" id="selected-Marionete_logo"></div>
     </div></div>

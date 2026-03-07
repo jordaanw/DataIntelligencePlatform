@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
-
-const LOGOS = '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS';
+const LOGOS_DROPBOX = '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS';
+const LOGOS_LOCAL   = './logos';  // local cache — always wins
 const OUTPUT_HTML = './logoChooser.html';
 const OUTPUT_JSON = './logoChoices.json';
 
@@ -56,9 +56,16 @@ function scoreMatch(img, name) {
   const fullLower = img.fullPath.toLowerCase();
   const baseName  = fileLower.replace(/\.(png|svg|jpg|jpeg|webp)$/, '');
   const searchName = name.toLowerCase().replace(/\.(png|svg|jpg|jpeg|webp)$/, '');
-  let score = 0;
+    let score = 0;
+    // If the search name contains an underscore and looks like a filename,
+    // require the base filename to contain ALL parts
+    const parts = searchName.split('_').filter(t => t.length > 1);
+    const allPartsMatch = parts.every(p => baseName.includes(p));
+    if (!allPartsMatch) return -999;  // disqualify immediately
+  // Local cache always wins
+  if (fullLower.includes(LOGOS_LOCAL.replace('./', ''))) score += 500;
 
-  // Exact filename match (ignoring extension) — highest priority
+  // Exact filename match
   if (baseName === searchName) score += 200;
   const normalised = baseName.replace(/[-_]/g, '');
   const normName = name.replace(/[-_]/g, '').toLowerCase();
@@ -66,14 +73,28 @@ function scoreMatch(img, name) {
   score -= baseName.length * 0.5;
   if (fileLower.includes('removebg')) score += 30;
   if (fullLower.includes('tech')) score += 20;
-  ['notebook', 'icon', 'badge', 'banner', 'stacked', 'horizontal', 'vertical', 'white', 'black', 'dark', 'light']
+  ['notebook', 'icon', 'badge', 'banner', 'stacked', 'horizontal', 'vertical', 'white', 'black', 'dark', 'light', 'logo']
     .forEach(w => { if (fileLower.includes(w) && !name.toLowerCase().includes(w)) score -= 25; });
 
   return score;
 }
 
 // Build matches data
-const allImages = getAllImages(LOGOS);
+const allImages = [
+  ...getAllImages(LOGOS_LOCAL),
+  ...getAllImages(LOGOS_DROPBOX),
+];
+// DEBUG — log Marionete file path and generated URL
+const mariFiles = allImages.filter(f => f.file.toLowerCase().includes('marionete'));
+if (mariFiles.length === 0) {
+  console.log('⚠️  No Marionete files found in either folder');
+} else {
+  mariFiles.forEach(f => {
+    console.log('✅ Found:', f.fullPath);
+    console.log('   URL:  ', 'file://' + encodeURI(f.fullPath));
+  });
+}
+
 const logoData = expected.map(name => {
   const terms = name.split('_').filter(t => t.length > 1);
   const pattern = new RegExp(terms.join('|'), 'i');
@@ -97,7 +118,7 @@ const cards = logoData.map(({ name, matches }) => {
 
   const options = matches.map((m, i) => {
     // Convert to file:// URL for local display
-    const fileUrl = 'file://' + m.fullPath.replace(/ /g, '%20');
+    const fileUrl = 'file://' + encodeURI(path.resolve(m.fullPath));
     const isSvg = m.file.toLowerCase().endsWith('.svg');
     const imgTag = `<img src="${fileUrl}" alt="${m.file}" onerror="this.parentElement.classList.add('broken')" />`;
     
@@ -108,6 +129,7 @@ const cards = logoData.map(({ name, matches }) => {
         ${i === 0 ? '<span class="crown">👑</span>' : ''}
         <div class="img-wrap">${imgTag}</div>
         <div class="filename">${m.file}</div>
+        <div class="filepath" onclick="event.stopPropagation()">${m.fullPath}</div>
         <div class="score">score: ${m.score.toFixed(0)}</div>
       </div>`;
   }).join('');
@@ -202,6 +224,23 @@ const html = `<!DOCTYPE html>
       color: #888;
       word-break: break-all;
       line-height: 1.3;
+    }
+    .filepath {
+      font-size: 9px;
+      color: #3a3a5a;
+      word-break: break-all;
+      line-height: 1.4;
+      margin-top: 4px;
+      text-align: left;
+      cursor: text;
+      user-select: all;
+      padding: 3px 4px;
+      border-radius: 3px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .filepath:hover {
+      color: #a78bfa;
+      background: #1e1e2e;
     }
     .score {
       font-size: 10px;
