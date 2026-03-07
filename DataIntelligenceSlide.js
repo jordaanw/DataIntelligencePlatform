@@ -136,7 +136,7 @@ function arrowRight(slide, x, y, w) {
   }
 
   // Message Store
-  sourceBox("Message Store", 0.48, 1.73, [
+  sourceBox("Message Store", 0.48, 1.22, [
     { logo: "kafka",     label: "Kafka" },
     { logo: "confluent", label: "Confluent" },
     { label: "Pulsar" },
@@ -147,7 +147,7 @@ function arrowRight(slide, x, y, w) {
   ]);
 
   // Legacy Databases
-  sourceBox("Legacy Databases", 2.27, 1.27, [
+  sourceBox("Legacy Databases", 1.76, 1.08, [
     { label: "SQL Server" },
     { logo: "mysql",      label: "MySQL" },
     { label: "IBM DB2" },
@@ -157,7 +157,7 @@ function arrowRight(slide, x, y, w) {
   ]);
 
   // Cloud Databases
-  sourceBox("Cloud Databases", 3.60, 1.27, [
+  sourceBox("Cloud Databases", 2.90, 0.9, [
     { label: "Azure SQL" },
     { label: "AWS RDS" },
     { logo: "snowflake",  label: "Snowflake" },
@@ -167,7 +167,7 @@ function arrowRight(slide, x, y, w) {
   ]);
 
   // Enterprise Applications
-  sourceBox("Enterprise Applications", 4.93, 1.73, [
+  sourceBox("Enterprise Applications", 3.86, 1.32, [
     { logo: "salesforce", label: "Salesforce" },
     { label: "Workday" },
     { label: "Google\nAnalytics" },
@@ -179,25 +179,31 @@ function arrowRight(slide, x, y, w) {
   ]);
 
   // Arrows — midpoints of each source box
-  [1.34, 2.91, 4.24, 5.80].forEach(ay => arrowRight(slide, srcX + srcW, ay, 0.22));
+  [1.09, 2.30, 3.35, 4.52].forEach(ay => arrowRight(slide, srcX + srcW, ay, 0.22));
 
   // ══════════════════════════════════════════
   // MAIN PLATFORM BOX
   // ══════════════════════════════════════════
-  const platX = 2.42, platY = 0.48, platW = 6.59, platH = 4.62;
+  const platX = 2.42, platY = 0.48, platW = 8.42, platH = 4.62;
 
   slide.addShape("rect", { x: platX, y: platY, w: platW, h: platH, fill: { color: "FAFAFE" }, line: { color: C.purple, width: 2.5 } });
   slide.addShape("rect", { x: platX, y: platY, w: platW, h: 0.3, fill: { color: C.purple }, line: { color: C.purple, width: 0 } });
 
   // Marionete logo in platform title bar
   addLogo(slide, "Marionete_logo", platX + 0.1, platY + 0.03, 0.6, 0.24);
-  slide.addText("Data Intelligence Platform", { x: platX + 0.75, y: platY, w: platW - 0.85, h: 0.3, fontSize: 11, color: C.white, bold: true, align: "center", valign: "middle" });
+  slide.addText("Data Intelligence Platform", { x: platX + 0.75, y: platY, w: platW - 1.5, h: 0.3, fontSize: 11, color: C.white, bold: true, align: "center", valign: "middle" });
+  addLogo(slide, "Marionete_logo", platX + platW - 0.7, platY + 0.03, 0.6, 0.24);
 
   // Orchestration bar
   sectionHeader(slide, platX + 0.08, platY + 0.34, platW - 0.16, 0.26, "Orchestration", { fontSize: 8 });
 
   // ── DATA INGESTION ──
   const ingX = platX + 0.08, ingY = platY + 0.66, ingW = 1.55, ingH = 2.88;
+  slide.addShape("rect", {
+    x: ingX - 0.1, y: ingY - 0.05, w: ingW + 0.2, h: ingH + 0.1,
+    fill: { color: "FFFFFF", transparency: 100 },
+    line: { color: "F4B000", width: 1.2 },
+  });
   slide.addShape("rect", { x: ingX, y: ingY, w: ingW, h: ingH, fill: { color: C.purplePale }, line: { color: C.purple, width: 1.5, dashType: "dash" } });
   slide.addText("Data Ingestion", { x: ingX, y: ingY + 0.04, w: ingW, h: 0.22, fontSize: 8, color: C.purple, bold: true, align: "center" });
 
@@ -261,27 +267,23 @@ function arrowRight(slide, x, y, w) {
 
   // ── RIGHT PANEL SECTIONS ──
   const rightX = etlX + etlW + 0.14;
-  const rightW = 2.0;  // narrower — placeholder sections to be updated
+  const rightW = platX + platW - rightX - 0.08;
   const rightSectionH = 0.72, rightGap = 0.06;
 
   const rightSections = [
-    { title: "Streaming Analytics",      icon: "📊" },
-    { title: "BI & Reporting",           icon: "📈" },
-    { title: "Data Sharing & Marketplace", icon: "🔗" },
-    { title: "AI Applications",          icon: "🤖", logoName: null },
-    { title: "Apps",                     icon: "⚙️", logoName: null },
+    { title: "Streaming analytics",       badge: "SA" },
+    { title: "BI & reporting",            badge: "BI" },
+    { title: "Data sharing & Marketplace", badge: "DS" },
+    { title: "AI Applications",           badge: "AI" },
+    { title: "Apps",                      badge: "AP" },
   ];
 
   rightSections.forEach((sec, i) => {
     const ry = platY + 0.66 + i * (rightSectionH + rightGap);
     sectionHeader(slide, rightX, ry, rightW, 0.26, sec.title, { fontSize: 7 });
     container(slide, rightX, ry + 0.26, rightW, rightSectionH - 0.26, { fill: C.gray, borderColor: C.grayBorder });
-    if (sec.logoName) {
-      addLogo(slide, sec.logoName, rightX + 0.1, ry + 0.32, 0.5, 0.34);
-    } else if (sec.icon) {
-      slide.addShape("rect", { x: rightX + 0.1, y: ry + 0.32, w: 0.42, h: 0.36, fill: { color: C.purplePale }, line: { color: C.purple, width: 0.5 }, rectRadius: 0.04 });
-      slide.addText(sec.icon, { x: rightX + 0.1, y: ry + 0.32, w: 0.42, h: 0.36, fontSize: 13, align: "center", valign: "middle" });
-    }
+    slide.addShape("ellipse", { x: rightX + 0.14, y: ry + 0.34, w: 0.34, h: 0.3, fill: { color: C.white }, line: { color: C.purple, width: 1 } });
+    slide.addText(sec.badge, { x: rightX + 0.14, y: ry + 0.34, w: 0.34, h: 0.3, fontSize: 6.5, color: C.purple, bold: true, align: "center", valign: "middle" });
   });
 
   // ── Arrows ingestion → centre ──
@@ -313,7 +315,15 @@ function arrowRight(slide, x, y, w) {
   slide.addShape("rect", { x: platX + platW / 2 + 0.08, y: lhY + 0.3, w: platW / 2 - 0.18, h: 0.62, fill: { color: "FFFFFF" }, line: { color: "FFFFFF", width: 0 }, rectRadius: 0.05 });
   slide.addText("Universal, Open Storage", { x: platX + platW / 2 + 0.1, y: lhY + 0.3, w: platW / 2 - 0.22, h: 0.18, fontSize: 5.5, color: C.dark, align: "center" });
   ["Delta Lake", "Parquet", "Iceberg"].forEach((t, i) => {
-    pill(slide, platX + platW / 2 + 0.18 + i * 1.42, lhY + 0.52, 1.28, 0.3, t, { fontSize: 8 });
+    const px = platX + platW / 2 + 0.18 + i * 1.42;
+    const logoKey = t.toLowerCase().replace(/\s+/g, "_");
+    const has = logo(logoKey);
+    if (has) {
+      slide.addShape("rect", { x: px, y: lhY + 0.5, w: 1.28, h: 0.34, fill: { color: C.white }, line: { color: C.grayBorder, width: 0.5 }, rectRadius: 0.04 });
+      slide.addImage({ data: has, x: px + 0.12, y: lhY + 0.54, w: 1.04, h: 0.22 });
+    } else {
+      pill(slide, px, lhY + 0.52, 1.28, 0.3, t, { fontSize: 8 });
+    }
   });
 
   // ══════════════════════════════════════════
@@ -322,11 +332,11 @@ function arrowRight(slide, x, y, w) {
   const outX = platX + platW + 0.2;
   const outW = 13.1 - outX;
   const outputs = [
-    "Use Case 1",
-    "Use Case 2",
-    "Use Case 3",
-    "Use Case 4",
-    "Use Case 5",
+    "Customer\nChurn Prediction",
+    "Customer\nSegmentation",
+    "HR Analytics",
+    "Operational\nDashboards",
+    "Risk Assessment\n& Optimization",
   ];
   outputs.forEach((label, i) => {
     const secH = 0.72, secGap = 0.06;
