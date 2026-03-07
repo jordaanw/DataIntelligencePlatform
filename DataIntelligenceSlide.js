@@ -24,12 +24,26 @@ const C = {
   grayDark:    "888888",
 };
 
-const LOGOS = "/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox/Company/Marketing/LOGOS";
+
+// Load the choices you made in the logo chooser
+const choices = JSON.parse(fs.readFileSync('./logoChoices.json', 'utf8'));
+
 function logo(name) {
-  const p = path.join(LOGOS, name + ".png");
-  if (!fs.existsSync(p)) return null;
-  const data = fs.readFileSync(p).toString("base64");
-  return "image/png;base64," + data;
+  const filePath = choices[name];
+  if (!filePath) {
+    console.warn(`  ⚠️  No choice found for: ${name}`);
+    return null;
+  }
+  if (!fs.existsSync(filePath)) {
+    console.warn(`  ⚠️  File not found: ${filePath}`);
+    return null;
+  }
+  const ext = path.extname(filePath).toLowerCase();
+  const data = fs.readFileSync(filePath).toString('base64');
+  const mime = ext === '.svg' ? 'image/svg+xml' : 
+               ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' : 
+               'image/png';
+  return `${mime};base64,${data}`;
 }
 
 // Helper to add an image if it exists, else skip
@@ -60,18 +74,6 @@ function arrowRight(slide, x, y, w) {
   slide.addShape("line", { x, y, w, h: 0, line: { color: C.dark, width: 1.2, endArrowType: "arrow" } });
 }
 
-// Small logo+label row inside a source box
-function logoRow(slide, logoName, label, x, y, w, h) {
-  const data = logo(logoName);
-  const logoW = 0.28;
-  if (data) {
-    slide.addImage({ data, x: x + 0.04, y: y + (h - logoW) / 2, w: logoW, h: logoW });
-    slide.addText(label, { x: x + logoW + 0.08, y, w: w - logoW - 0.1, h, fontSize: 6, color: C.dark, valign: "middle" });
-  } else {
-    slide.addText(label, { x, y, w, h, fontSize: 6, color: C.dark, align: "center", valign: "middle" });
-  }
-}
-
 (async () => {
   const pres = new pptxgen();
   pres.layout = "LAYOUT_WIDE"; // 13.3" x 7.5"
@@ -88,73 +90,92 @@ function logoRow(slide, logoName, label, x, y, w, h) {
   // LEFT COLUMN — Source boxes
   // ══════════════════════════════════════════
   const srcX = 0.08, srcW = 2.1;
-  const rowH = 0.3;
 
-  // Helper: source box with logo rows
+  // Helper: source box — icons only if logo available, text fallback
+  // Layout: 3 columns, big icons
   function sourceBox(title, yStart, boxH, rows) {
-    sectionHeader(slide, srcX, yStart, srcW, 0.25, title, { fontSize: 7.5, fill: C.srcHeader });
-      container(slide, srcX, yStart + 0.25, srcW, boxH - 0.25, {
-          fill: C.srcBody,     // ← light green instead of gray
-          borderColor: C.srcHeader
-      });
+    const COLS = 3;
+    const ICON_SIZE = 0.42;       // icon display size in inches
+    const CELL_H = 0.58;          // height per cell
+    const HEADER_H = 0.25;
+    const colW = (srcW - 0.1) / COLS;
+
+    sectionHeader(slide, srcX, yStart, srcW, HEADER_H, title, { fontSize: 7.5, fill: C.srcHeader });
+    container(slide, srcX, yStart + HEADER_H, srcW, boxH - HEADER_H, {
+      fill: C.srcBody, borderColor: C.srcHeader
+    });
+
     rows.forEach((row, i) => {
-      const ry = yStart + 0.30 + i * rowH;
-      const col = i % 2;
-      const colRow = Math.floor(i / 2);
-      const colW = (srcW - 0.08) / 2;
-      const rx = srcX + 0.04 + col * colW;
-      const ry2 = yStart + 0.30 + colRow * rowH;
-      if (row.logo) {
-        const d = logo(row.logo);
-        const lw = row.logoW || 0.22;
-        const lh = row.logoH || 0.22;
-        if (d) slide.addImage({ data: d, x: rx + 0.02, y: ry2 + (rowH - lh) / 2, w: lw, h: lh });
-        slide.addText(row.label, {
-          x: rx + (d ? lw + 0.04 : 0), y: ry2, w: colW - (d ? lw + 0.06 : 0.04), h: rowH,
-          fontSize: 5.8, color: C.dark, valign: "middle", wrap: true,
+      const col    = i % COLS;
+      const rowNum = Math.floor(i / COLS);
+      const rx     = srcX + 0.05 + col * colW;
+      const ry     = yStart + HEADER_H + 0.06 + rowNum * CELL_H;
+      const d      = row.logo ? logo(row.logo) : null;
+
+      if (d) {
+        // Icon only — centred, no text
+        slide.addImage({
+          data: d,
+          x: rx + (colW - ICON_SIZE) / 2,
+          y: ry + (CELL_H - ICON_SIZE) / 2,
+          w: ICON_SIZE,
+          h: ICON_SIZE,
         });
-      } else {
-        slide.addText(row.label, { x: rx, y: ry2, w: colW - 0.04, h: rowH, fontSize: 5.8, color: C.dark, align: "center", valign: "middle", wrap: true });
+      } else if (row.label) {
+        // Text only fallback
+        slide.addText(row.label, {
+          x: rx, y: ry, w: colW, h: CELL_H,
+          fontSize: 5.8, color: C.dark,
+          align: "center", valign: "middle", wrap: true,
+        });
       }
     });
   }
 
   // Message Store
-  sourceBox("Message Store", 0.48, 1.12, [
-    { logo: "kafka",     label: "Kafka",               logoW: 0.22, logoH: 0.22 },
-    { logo: "confluent", label: "Confluent",            logoW: 0.28, logoH: 0.06 },
+  sourceBox("Message Store", 0.48, 1.22, [
+    { logo: "kafka",     label: "Kafka" },
+    { logo: "confluent", label: "Confluent" },
     { label: "Pulsar" },
     { label: "Amazon MSK" },
-    { label: "Kinesis Streams" },
-    { label: "Azure Event Hubs" },
-    { label: "GCP Pub/Sub" },
-    { label: "" },
+    { label: "Kinesis" },
+    { label: "Azure\nEvent Hubs" },
+    { label: "GCP\nPub/Sub" },
   ]);
 
   // Legacy Databases
-  sourceBox("Legacy Databases", 1.66, 0.98, [
-    { label: "SQL Server" }, { label: "MySQL" },
-    { label: "IBM DB2" },    { label: "PostgreSQL" },
-    { label: "MongoDB" },    { label: "Oracle DB" },
+  sourceBox("Legacy Databases", 1.76, 1.08, [
+    { label: "SQL Server" },
+    { logo: "mysql",      label: "MySQL" },
+    { label: "IBM DB2" },
+    { logo: "postgresql", label: "PostgreSQL" },
+    { logo: "mongodb",    label: "MongoDB" },
+    { label: "Oracle DB" },
   ]);
 
   // Cloud Databases
-  sourceBox("Cloud Databases", 2.70, 0.82, [
-    { label: "Azure SQL" },  { label: "AWS RDS" },
-    { label: "Snowflake" },  { label: "BigQuery" },
-    { label: "Redshift" },   { label: "DynamoDB" },
+  sourceBox("Cloud Databases", 2.90, 0.9, [
+    { label: "Azure SQL" },
+    { label: "AWS RDS" },
+    { logo: "snowflake",  label: "Snowflake" },
+    { label: "BigQuery" },
+    { label: "Redshift" },
+    { label: "DynamoDB" },
   ]);
 
   // Enterprise Applications
-  sourceBox("Enterprise Applications", 3.58, 1.4, [
-    { label: "Salesforce" },      { label: "Workday" },
-    { label: "Google Analytics"}, { label: "Oracle NetSuite" },
-    { label: "ServiceNow" },      { label: "Google Ads" },
+  sourceBox("Enterprise Applications", 3.86, 1.32, [
+    { logo: "salesforce", label: "Salesforce" },
+    { label: "Workday" },
+    { label: "Google\nAnalytics" },
+    { label: "Oracle\nNetSuite" },
+    { label: "ServiceNow" },
+    { label: "Google Ads" },
     { label: "MS Dynamics 365" }, { label: "SharePoint" },
   ]);
 
-  // Arrows
-  [1.02, 2.1, 3.08, 4.08].forEach(ay => arrowRight(slide, srcX + srcW, ay, 0.22));
+  // Arrows — midpoints of each source box
+  [1.09, 2.30, 3.35, 4.52].forEach(ay => arrowRight(slide, srcX + srcW, ay, 0.22));
 
   // ══════════════════════════════════════════
   // MAIN PLATFORM BOX

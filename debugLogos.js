@@ -24,20 +24,28 @@ const expected = [
   "salesforce",
   "mysql",
   "postgresql",
+  "Marionete_logo", 
 ];
 
-function getAllImages(dir) {
+function getAllImages(dir, visited = new Set()) {
   let results = [];
   try {
+    // Resolve symlinks to avoid infinite loops
+    const resolved = fs.realpathSync(dir);
+    if (visited.has(resolved)) return results;
+    visited.add(resolved);
+
     fs.readdirSync(dir).forEach(item => {
       if (item.startsWith('.')) return;
       const full = path.join(dir, item);
-      const stat = fs.statSync(full);
-      if (stat.isDirectory()) {
-        results = results.concat(getAllImages(full));
-      } else if (/\.(png|svg|jpg|jpeg|webp)$/i.test(item)) {
-        results.push({ file: item, fullPath: full });
-      }
+      try {
+        const stat = fs.statSync(full); // statSync follows symlinks
+        if (stat.isDirectory()) {
+          results = results.concat(getAllImages(full, visited));
+        } else if (/\.(png|svg|jpg|jpeg|webp)$/i.test(item)) {
+          results.push({ file: item, fullPath: full });
+        }
+      } catch(e) {} // skip broken symlinks
     });
   } catch (e) {}
   return results;
@@ -46,10 +54,12 @@ function getAllImages(dir) {
 function scoreMatch(img, name) {
   const fileLower = img.file.toLowerCase();
   const fullLower = img.fullPath.toLowerCase();
-  const baseName = fileLower.replace(/\.(png|svg|jpg|jpeg|webp)$/, '');
+  const baseName  = fileLower.replace(/\.(png|svg|jpg|jpeg|webp)$/, '');
+  const searchName = name.toLowerCase().replace(/\.(png|svg|jpg|jpeg|webp)$/, '');
   let score = 0;
 
-  if (baseName === name.toLowerCase()) score += 100;
+  // Exact filename match (ignoring extension) — highest priority
+  if (baseName === searchName) score += 200;
   const normalised = baseName.replace(/[-_]/g, '');
   const normName = name.replace(/[-_]/g, '').toLowerCase();
   if (normalised === normName) score += 80;
