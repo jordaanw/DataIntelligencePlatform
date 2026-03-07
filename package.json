@@ -4,6 +4,10 @@
   "description": "",
   "main": "DataIntelligenceSlide.js",
   "scripts": {
+    "logos:pick": "node debugLogos.js",
+    "logos:auto": "node automateLogos.js",
+    "slide:build": "node DataIntelligenceSlide.js",
+    "slide:refresh": "node automateLogos.js && node DataIntelligenceSlide.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

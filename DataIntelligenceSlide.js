@@ -25,8 +25,11 @@ const C = {
 };
 
 
-// Load the choices you made in the logo chooser
-const choices = JSON.parse(fs.readFileSync('./logoChoices.json', 'utf8'));
+// Prefer local, stable logo mapping for reproducible builds.
+const choicesPath = fs.existsSync("./logoChoices.local.json")
+  ? "./logoChoices.local.json"
+  : "./logoChoices.json";
+const choices = JSON.parse(fs.readFileSync(choicesPath, "utf8"));
 
 function logo(name) {
   const filePath = choices[name];
@@ -95,8 +98,8 @@ function arrowRight(slide, x, y, w) {
   // Layout: 3 columns, big icons
   function sourceBox(title, yStart, boxH, rows) {
     const COLS = 3;
-    const ICON_SIZE = 0.42;       // icon display size in inches
-    const CELL_H = 0.58;          // height per cell
+    const ICON_SIZE = 0.38;       // icon display size in inches
+    const CELL_H = 0.46;          // height per cell
     const HEADER_H = 0.25;
     const colW = (srcW - 0.1) / COLS;
 
@@ -133,7 +136,7 @@ function arrowRight(slide, x, y, w) {
   }
 
   // Message Store
-  sourceBox("Message Store", 0.48, 1.22, [
+  sourceBox("Message Store", 0.48, 1.73, [
     { logo: "kafka",     label: "Kafka" },
     { logo: "confluent", label: "Confluent" },
     { label: "Pulsar" },
@@ -144,7 +147,7 @@ function arrowRight(slide, x, y, w) {
   ]);
 
   // Legacy Databases
-  sourceBox("Legacy Databases", 1.76, 1.08, [
+  sourceBox("Legacy Databases", 2.27, 1.27, [
     { label: "SQL Server" },
     { logo: "mysql",      label: "MySQL" },
     { label: "IBM DB2" },
@@ -154,7 +157,7 @@ function arrowRight(slide, x, y, w) {
   ]);
 
   // Cloud Databases
-  sourceBox("Cloud Databases", 2.90, 0.9, [
+  sourceBox("Cloud Databases", 3.60, 1.27, [
     { label: "Azure SQL" },
     { label: "AWS RDS" },
     { logo: "snowflake",  label: "Snowflake" },
@@ -164,31 +167,31 @@ function arrowRight(slide, x, y, w) {
   ]);
 
   // Enterprise Applications
-  sourceBox("Enterprise Applications", 3.86, 1.32, [
+  sourceBox("Enterprise Applications", 4.93, 1.73, [
     { logo: "salesforce", label: "Salesforce" },
     { label: "Workday" },
     { label: "Google\nAnalytics" },
     { label: "Oracle\nNetSuite" },
     { label: "ServiceNow" },
     { label: "Google Ads" },
-    { label: "MS Dynamics 365" }, { label: "SharePoint" },
+    { label: "MS Dynamics 365" },
+    { label: "SharePoint" },
   ]);
 
   // Arrows — midpoints of each source box
-  [1.09, 2.30, 3.35, 4.52].forEach(ay => arrowRight(slide, srcX + srcW, ay, 0.22));
+  [1.34, 2.91, 4.24, 5.80].forEach(ay => arrowRight(slide, srcX + srcW, ay, 0.22));
 
   // ══════════════════════════════════════════
   // MAIN PLATFORM BOX
   // ══════════════════════════════════════════
-  const platX = 2.42, platY = 0.48, platW = 8.42, platH = 4.62;
+  const platX = 2.42, platY = 0.48, platW = 6.59, platH = 4.62;
 
   slide.addShape("rect", { x: platX, y: platY, w: platW, h: platH, fill: { color: "FAFAFE" }, line: { color: C.purple, width: 2.5 } });
   slide.addShape("rect", { x: platX, y: platY, w: platW, h: 0.3, fill: { color: C.purple }, line: { color: C.purple, width: 0 } });
 
-  // Databricks logo in platform title bar
-  addLogo(slide, "databricks", platX + 0.15, platY + 0.04, 0.22, 0.22);
-  slide.addText("Data Intelligence Platform", { x: platX + 0.4, y: platY, w: platW - 0.8, h: 0.3, fontSize: 11, color: C.white, bold: true, align: "center", valign: "middle" });
-  addLogo(slide, "databricks", platX + platW - 0.37, platY + 0.04, 0.22, 0.22);
+  // Marionete logo in platform title bar
+  addLogo(slide, "Marionete_logo", platX + 0.1, platY + 0.03, 0.6, 0.24);
+  slide.addText("Data Intelligence Platform", { x: platX + 0.75, y: platY, w: platW - 0.85, h: 0.3, fontSize: 11, color: C.white, bold: true, align: "center", valign: "middle" });
 
   // Orchestration bar
   sectionHeader(slide, platX + 0.08, platY + 0.34, platW - 0.16, 0.26, "Orchestration", { fontSize: 8 });
@@ -258,7 +261,7 @@ function arrowRight(slide, x, y, w) {
 
   // ── RIGHT PANEL SECTIONS ──
   const rightX = etlX + etlW + 0.14;
-  const rightW = platX + platW - rightX - 0.08;
+  const rightW = 2.0;  // narrower — placeholder sections to be updated
   const rightSectionH = 0.72, rightGap = 0.06;
 
   const rightSections = [
@@ -319,11 +322,11 @@ function arrowRight(slide, x, y, w) {
   const outX = platX + platW + 0.2;
   const outW = 13.1 - outX;
   const outputs = [
-    "Customer\nChurn Prediction",
-    "Customer\nSegmentation",
-    "HR Analytics",
-    "Operational\nDashboards",
-    "Risk Assessment\n& Optimization",
+    "Use Case 1",
+    "Use Case 2",
+    "Use Case 3",
+    "Use Case 4",
+    "Use Case 5",
   ];
   outputs.forEach((label, i) => {
     const secH = 0.72, secGap = 0.06;

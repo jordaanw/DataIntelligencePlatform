@@ -1,0 +1,17 @@
+{
+  "confluent": "logos/confluent.png",
+  "databricks": "logos/databricks.png",
+  "databricks_notebooks": "logos/databricks_notebooks.png",
+  "dbt": "logos/dbt.png",
+  "git": "logos/git.png",
+  "grpc": "logos/grpc.png",
+  "kafka": "logos/kafka.png",
+  "ai_ml": "logos/ai_ml.png",
+  "delta_lake": "logos/delta_lake.svg",
+  "mlflow": "logos/mlflow.png",
+  "mongodb": "logos/mongodb.png",
+  "snowflake": "logos/snowflake.svg",
+  "mysql": "logos/mysql.svg",
+  "postgresql": "logos/postgresql.svg",
+  "Marionete_logo": "logos/Marionete_logo.png"
+}
