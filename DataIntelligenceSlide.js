@@ -4,13 +4,20 @@ const path = require("path");
 
 // Colours
 const C = {
-  purple:      "5D35B1",
-  purpleDark:  "3D1F82",
-  purpleLight: "7B52CC",
-  purplePale:  "EDE8F9",
+  // Platform & UI
+  purple:      "5D35B1",   // Marionete purple - main platform
+  purpleDark:  "7030A0",   // NGHC purple - lakehouse bar
+  purpleDeep:  "2D1B69",   // deep purple - section headers
+  purplePale:  "EDE8F9",   // pale purple - fill backgrounds
+
+  // Source inputs - teal green
+  srcHeader:   "1A7A5E",   // green header for source boxes
+  srcBody:     "E8F5F0",   // very light green body fill
+
+  // Neutrals
   white:       "FFFFFF",
   dark:        "1A1A1A",
-  darkNav:     "A9D18E",
+  darkNav:     "2D1B69",   // replaces pure black - deep purple instead
   gray:        "F2F2F2",
   grayBorder:  "CCCCCC",
   grayMid:     "E4E4E4",
@@ -85,8 +92,11 @@ function logoRow(slide, logoName, label, x, y, w, h) {
 
   // Helper: source box with logo rows
   function sourceBox(title, yStart, boxH, rows) {
-    sectionHeader(slide, srcX, yStart, srcW, 0.25, title, { fontSize: 7.5 });
-    container(slide, srcX, yStart + 0.25, srcW, boxH - 0.25, { fill: C.gray, borderColor: C.grayBorder });
+    sectionHeader(slide, srcX, yStart, srcW, 0.25, title, { fontSize: 7.5, fill: C.srcHeader });
+      container(slide, srcX, yStart + 0.25, srcW, boxH - 0.25, {
+          fill: C.srcBody,     // ← light green instead of gray
+          borderColor: C.srcHeader
+      });
     rows.forEach((row, i) => {
       const ry = yStart + 0.30 + i * rowH;
       const col = i % 2;
@@ -136,7 +146,7 @@ function logoRow(slide, logoName, label, x, y, w, h) {
   ]);
 
   // Enterprise Applications
-  sourceBox("Enterprise Applications", 3.58, 1.1, [
+  sourceBox("Enterprise Applications", 3.58, 1.4, [
     { label: "Salesforce" },      { label: "Workday" },
     { label: "Google Analytics"}, { label: "Oracle NetSuite" },
     { label: "ServiceNow" },      { label: "Google Ads" },
