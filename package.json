@@ -4,6 +4,8 @@
   "description": "",
   "main": "DataIntelligenceSlide.js",
   "scripts": {
+    "logoChoices": "node debugLogos.js",
+    "logoChoices:pull": "node -e \"const fs=require('fs');const os=require('os');const path=require('path');const src=path.join(os.homedir(),'Downloads','logoChoices.json');const dst=path.join(process.cwd(),'logoChoices.json');if(!fs.existsSync(src)){console.error('Source not found: '+src);process.exit(1);}fs.copyFileSync(src,dst);console.log('Copied '+src+' -> '+dst);\"",
     "logos:pick": "node debugLogos.js",
     "logos:auto": "node automateLogos.js",
     "slide:build": "node DataIntelligenceSlide.js",

@@ -5,6 +5,21 @@ const LOGOS_DROPBOX = '/Users/wynand.jordaan/Marionete Dropbox/Marionete Dropbox
 const LOGOS_LOCAL   = './logos';  // local cache — always wins
 const OUTPUT_HTML = './logoChooser.html';
 const OUTPUT_JSON = './logoChoices.json';
+const TERM_ALIASES = {
+  amazon_msk: ["amazon", "msk", "kafka"],
+  azure_event_hubs: ["azure", "event", "hub", "eventhub"],
+  gcp_pubsub: ["gcp", "google", "cloud", "pubsub", "pub", "sub"],
+  sql_server: ["sql", "server", "mssql"],
+  ibm_db2: ["ibm", "db2"],
+  oracle_db: ["oracle", "database"],
+  aws_rds: ["aws", "rds", "amazon", "relational"],
+  dynamodb: ["dynamodb", "dynamo", "aws"],
+  google_analytics: ["google", "analytics", "ga4"],
+  oracle_netsuite: ["oracle", "netsuite"],
+  google_ads: ["google", "ads", "adwords"],
+  ms_dynamics_365: ["microsoft", "dynamics", "365"],
+  sharepoint: ["sharepoint", "share", "point", "microsoft"],
+};
 
 const expected = [
   "confluent",
@@ -14,14 +29,34 @@ const expected = [
   "git",
   "grpc",
   "kafka",
+  "pulsar",
+  "amazon_msk",
+  "kinesis",
+  "azure_event_hubs",
+  "gcp_pubsub",
   "ai_ml",
   "delta_lake",
   "parquet",
   "iceberg",
   "mlflow",
+  "sql_server",
+  "ibm_db2",
+  "oracle_db",
   "mongodb",
   "snowflake",
+  "azure_sql",
+  "aws_rds",
+  "bigquery",
+  "redshift",
+  "dynamodb",
   "salesforce",
+  "workday",
+  "google_analytics",
+  "oracle_netsuite",
+  "servicenow",
+  "google_ads",
+  "ms_dynamics_365",
+  "sharepoint",
   "mysql",
   "postgresql",
   "Marionete_logo", 
@@ -60,8 +95,10 @@ function scoreMatch(img, name) {
     // If the search name contains an underscore and looks like a filename,
     // require the base filename to contain ALL parts
     const parts = searchName.split('_').filter(t => t.length > 1);
-    const allPartsMatch = parts.every(p => baseName.includes(p));
-    if (!allPartsMatch) return -999;  // disqualify immediately
+    const matchedParts = parts.filter(p => baseName.includes(p)).length;
+    if (parts.length > 0 && matchedParts === 0) return -999;
+    score += matchedParts * 35;
+    if (parts.length > 1 && matchedParts < Math.ceil(parts.length / 2)) score -= 50;
   // Local cache always wins
   if (fullLower.includes(LOGOS_LOCAL.replace('./', ''))) score += 500;
 
@@ -96,7 +133,7 @@ if (mariFiles.length === 0) {
 }
 
 const logoData = expected.map(name => {
-  const terms = name.split('_').filter(t => t.length > 1);
+  const terms = TERM_ALIASES[name] || name.split('_').filter(t => t.length > 1);
   const pattern = new RegExp(terms.join('|'), 'i');
   const matches = allImages
     .filter(img => pattern.test(img.file))

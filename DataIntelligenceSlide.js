@@ -25,34 +25,122 @@ const C = {
 };
 
 
-// Prefer local, stable logo mapping for reproducible builds.
-const choicesPath = fs.existsSync("./logoChoices.local.json")
-  ? "./logoChoices.local.json"
-  : "./logoChoices.json";
-const choices = JSON.parse(fs.readFileSync(choicesPath, "utf8"));
+// Manual picker output should win per key; auto map fills missing keys.
+const manualChoices = fs.existsSync("./logoChoices.json")
+  ? JSON.parse(fs.readFileSync("./logoChoices.json", "utf8"))
+  : {};
+const localChoices = fs.existsSync("./logoChoices.local.json")
+  ? JSON.parse(fs.readFileSync("./logoChoices.local.json", "utf8"))
+  : {};
+const choices = { ...localChoices, ...manualChoices };
+
+const logoCache = new Map();
+const warnedMissingChoice = new Set();
+const warnedMissingFile = new Set();
+
+function parseNumber(value) {
+  if (!value) return null;
+  const m = String(value).match(/([\d.]+)/);
+  return m ? Number(m[1]) : null;
+}
+
+function getJpegSize(buf) {
+  if (buf.length < 4 || buf[0] !== 0xff || buf[1] !== 0xd8) return null;
+  let i = 2;
+  while (i + 9 < buf.length) {
+    if (buf[i] !== 0xff) {
+      i += 1;
+      continue;
+    }
+    const marker = buf[i + 1];
+    if (marker === 0xc0 || marker === 0xc2) {
+      const h = buf.readUInt16BE(i + 5);
+      const w = buf.readUInt16BE(i + 7);
+      return { width: w, height: h };
+    }
+    const segLen = buf.readUInt16BE(i + 2);
+    if (segLen < 2) break;
+    i += 2 + segLen;
+  }
+  return null;
+}
+
+function getImageSize(filePath, ext, dataBuf) {
+  if (ext === ".png" && dataBuf.length >= 24) {
+    return {
+      width: dataBuf.readUInt32BE(16),
+      height: dataBuf.readUInt32BE(20),
+    };
+  }
+  if (ext === ".jpg" || ext === ".jpeg") return getJpegSize(dataBuf);
+  if (ext === ".svg") {
+    const text = dataBuf.toString("utf8");
+    const viewBox = text.match(/viewBox=["']\s*([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)\s+([\d.\-]+)\s*["']/i);
+    const widthAttr = text.match(/\bwidth=["']([^"']+)["']/i);
+    const heightAttr = text.match(/\bheight=["']([^"']+)["']/i);
+    const width = parseNumber(widthAttr && widthAttr[1]);
+    const height = parseNumber(heightAttr && heightAttr[1]);
+    if (width && height) return { width, height };
+    if (viewBox) return { width: Number(viewBox[3]), height: Number(viewBox[4]) };
+  }
+  return null;
+}
 
 function logo(name) {
+  if (logoCache.has(name)) return logoCache.get(name);
+
   const filePath = choices[name];
   if (!filePath) {
-    console.warn(`  ⚠️  No choice found for: ${name}`);
+    if (!warnedMissingChoice.has(name)) {
+      console.warn(`  ⚠️  No choice found for: ${name}`);
+      warnedMissingChoice.add(name);
+    }
     return null;
   }
   if (!fs.existsSync(filePath)) {
-    console.warn(`  ⚠️  File not found: ${filePath}`);
+    if (!warnedMissingFile.has(filePath)) {
+      console.warn(`  ⚠️  File not found: ${filePath}`);
+      warnedMissingFile.add(filePath);
+    }
     return null;
   }
   const ext = path.extname(filePath).toLowerCase();
-  const data = fs.readFileSync(filePath).toString('base64');
+  const dataBuf = fs.readFileSync(filePath);
+  const data = dataBuf.toString("base64");
   const mime = ext === '.svg' ? 'image/svg+xml' : 
                ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' : 
                'image/png';
-  return `${mime};base64,${data}`;
+  const size = getImageSize(filePath, ext, dataBuf);
+  const value = {
+    data: `${mime};base64,${data}`,
+    width: size ? size.width : null,
+    height: size ? size.height : null,
+  };
+  logoCache.set(name, value);
+  return value;
 }
 
-// Helper to add an image if it exists, else skip
-function addLogo(slide, name, x, y, w, h) {
-  const data = logo(name);
-  if (data) slide.addImage({ data, x, y, w, h });
+function addLogo(slide, name, x, y, w, h, pad = 0) {
+  const img = logo(name);
+  if (!img) return false;
+
+  const ix = x + pad;
+  const iy = y + pad;
+  const iw = Math.max(0.01, w - pad * 2);
+  const ih = Math.max(0.01, h - pad * 2);
+
+  if (!img.width || !img.height) {
+    slide.addImage({ data: img.data, x: ix, y: iy, w: iw, h: ih });
+    return true;
+  }
+
+  const scale = Math.min(iw / img.width, ih / img.height);
+  const drawW = img.width * scale;
+  const drawH = img.height * scale;
+  const dx = ix + (iw - drawW) / 2;
+  const dy = iy + (ih - drawH) / 2;
+  slide.addImage({ data: img.data, x: dx, y: dy, w: drawW, h: drawH });
+  return true;
 }
 
 function sectionHeader(slide, x, y, w, h, label, opts = {}) {
@@ -113,17 +201,8 @@ function arrowRight(slide, x, y, w) {
       const rowNum = Math.floor(i / COLS);
       const rx     = srcX + 0.05 + col * colW;
       const ry     = yStart + HEADER_H + 0.06 + rowNum * CELL_H;
-      const d      = row.logo ? logo(row.logo) : null;
-
-      if (d) {
-        // Icon only — centred, no text
-        slide.addImage({
-          data: d,
-          x: rx + (colW - ICON_SIZE) / 2,
-          y: ry + (CELL_H - ICON_SIZE) / 2,
-          w: ICON_SIZE,
-          h: ICON_SIZE,
-        });
+      if (row.logo && addLogo(slide, row.logo, rx + 0.02, ry + 0.02, colW - 0.04, CELL_H - 0.04, 0.01)) {
+        // Logo rendered using contain-fit; text fallback below when logo missing.
       } else if (row.label) {
         // Text only fallback
         slide.addText(row.label, {
@@ -139,43 +218,43 @@ function arrowRight(slide, x, y, w) {
   sourceBox("Message Store", 0.48, 1.22, [
     { logo: "kafka",     label: "Kafka" },
     { logo: "confluent", label: "Confluent" },
-    { label: "Pulsar" },
-    { label: "Amazon MSK" },
-    { label: "Kinesis" },
-    { label: "Azure\nEvent Hubs" },
-    { label: "GCP\nPub/Sub" },
+    { logo: "pulsar", label: "Pulsar" },
+    { logo: "amazon_msk", label: "Amazon MSK" },
+    { logo: "kinesis", label: "Kinesis" },
+    { logo: "azure_event_hubs", label: "Azure\nEvent Hubs" },
+    { logo: "gcp_pubsub", label: "GCP\nPub/Sub" },
   ]);
 
   // Legacy Databases
   sourceBox("Legacy Databases", 1.76, 1.08, [
-    { label: "SQL Server" },
+    { logo: "sql_server", label: "SQL Server" },
     { logo: "mysql",      label: "MySQL" },
-    { label: "IBM DB2" },
+    { logo: "ibm_db2", label: "IBM DB2" },
     { logo: "postgresql", label: "PostgreSQL" },
     { logo: "mongodb",    label: "MongoDB" },
-    { label: "Oracle DB" },
+    { logo: "oracle_db", label: "Oracle DB" },
   ]);
 
   // Cloud Databases
   sourceBox("Cloud Databases", 2.90, 0.9, [
-    { label: "Azure SQL" },
-    { label: "AWS RDS" },
+    { logo: "azure_sql", label: "Azure SQL" },
+    { logo: "aws_rds", label: "AWS RDS" },
     { logo: "snowflake",  label: "Snowflake" },
-    { label: "BigQuery" },
-    { label: "Redshift" },
-    { label: "DynamoDB" },
+    { logo: "bigquery", label: "BigQuery" },
+    { logo: "redshift", label: "Redshift" },
+    { logo: "dynamodb", label: "DynamoDB" },
   ]);
 
   // Enterprise Applications
   sourceBox("Enterprise Applications", 3.86, 1.32, [
     { logo: "salesforce", label: "Salesforce" },
-    { label: "Workday" },
-    { label: "Google\nAnalytics" },
-    { label: "Oracle\nNetSuite" },
-    { label: "ServiceNow" },
-    { label: "Google Ads" },
-    { label: "MS Dynamics 365" },
-    { label: "SharePoint" },
+    { logo: "workday", label: "Workday" },
+    { logo: "google_analytics", label: "Google\nAnalytics" },
+    { logo: "oracle_netsuite", label: "Oracle\nNetSuite" },
+    { logo: "servicenow", label: "ServiceNow" },
+    { logo: "google_ads", label: "Google Ads" },
+    { logo: "ms_dynamics_365", label: "MS Dynamics 365" },
+    { logo: "sharepoint", label: "SharePoint" },
   ]);
 
   // Arrows — midpoints of each source box
@@ -320,7 +399,7 @@ function arrowRight(slide, x, y, w) {
     const has = logo(logoKey);
     if (has) {
       slide.addShape("rect", { x: px, y: lhY + 0.5, w: 1.28, h: 0.34, fill: { color: C.white }, line: { color: C.grayBorder, width: 0.5 }, rectRadius: 0.04 });
-      slide.addImage({ data: has, x: px + 0.12, y: lhY + 0.54, w: 1.04, h: 0.22 });
+      addLogo(slide, logoKey, px + 0.1, lhY + 0.52, 1.08, 0.28, 0.01);
     } else {
       pill(slide, px, lhY + 0.52, 1.28, 0.3, t, { fontSize: 8 });
     }

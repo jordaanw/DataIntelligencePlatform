@@ -6,6 +6,21 @@ const LOGOS_DROPBOX =
 const LOGOS_LOCAL = "./logos";
 const INPUT_CHOICES = "./logoChoices.json";
 const OUTPUT_CHOICES = "./logoChoices.local.json";
+const TERM_ALIASES = {
+  amazon_msk: ["amazon", "msk", "kafka"],
+  azure_event_hubs: ["azure", "event", "hub", "eventhub"],
+  gcp_pubsub: ["gcp", "google", "cloud", "pubsub", "pub", "sub"],
+  sql_server: ["sql", "server", "mssql"],
+  ibm_db2: ["ibm", "db2"],
+  oracle_db: ["oracle", "database"],
+  aws_rds: ["aws", "rds", "amazon", "relational"],
+  dynamodb: ["dynamodb", "dynamo", "aws"],
+  google_analytics: ["google", "analytics", "ga4"],
+  oracle_netsuite: ["oracle", "netsuite"],
+  google_ads: ["google", "ads", "adwords"],
+  ms_dynamics_365: ["microsoft", "dynamics", "365"],
+  sharepoint: ["sharepoint", "share", "point", "microsoft"],
+};
 
 const expected = [
   "confluent",
@@ -15,14 +30,34 @@ const expected = [
   "git",
   "grpc",
   "kafka",
+  "pulsar",
+  "amazon_msk",
+  "kinesis",
+  "azure_event_hubs",
+  "gcp_pubsub",
   "ai_ml",
   "delta_lake",
   "parquet",
   "iceberg",
   "mlflow",
+  "sql_server",
+  "ibm_db2",
+  "oracle_db",
   "mongodb",
   "snowflake",
+  "azure_sql",
+  "aws_rds",
+  "bigquery",
+  "redshift",
+  "dynamodb",
   "salesforce",
+  "workday",
+  "google_analytics",
+  "oracle_netsuite",
+  "servicenow",
+  "google_ads",
+  "ms_dynamics_365",
+  "sharepoint",
   "mysql",
   "postgresql",
   "Marionete_logo",
@@ -62,12 +97,13 @@ function scoreMatch(img, name) {
   const baseName = fileLower.replace(/\.(png|svg|jpg|jpeg|webp)$/, "");
   const searchName = name.toLowerCase().replace(/\.(png|svg|jpg|jpeg|webp)$/, "");
   const ext = path.extname(fileLower);
+  let score = 0;
 
   const parts = searchName.split("_").filter((t) => t.length > 1);
-  const allPartsMatch = parts.every((p) => baseName.includes(p));
-  if (!allPartsMatch) return -999;
-
-  let score = 0;
+  const matchedParts = parts.filter((p) => baseName.includes(p)).length;
+  if (parts.length > 0 && matchedParts === 0) return -999;
+  score += matchedParts * 35;
+  if (parts.length > 1 && matchedParts < Math.ceil(parts.length / 2)) score -= 50;
   if (fullLower.includes(path.resolve(LOGOS_LOCAL).toLowerCase())) score += 500;
   if (baseName === searchName) score += 200;
   const normalised = baseName.replace(/[-_\s]/g, "");
@@ -85,7 +121,7 @@ function scoreMatch(img, name) {
 }
 
 function findBestMatch(name, allImages) {
-  const terms = name.split("_").filter((t) => t.length > 1);
+  const terms = TERM_ALIASES[name] || name.split("_").filter((t) => t.length > 1);
   const pattern = new RegExp(terms.join("|"), "i");
   const matches = allImages
     .filter((img) => pattern.test(img.file))
